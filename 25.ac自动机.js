@@ -51,7 +51,7 @@ class ACTree {
         } else {
           let q = p.fail
           while (q) {
-            let qChild = q.children[pChild.charCodeAt() + 1]
+            let qChild = q.children[pChild.data.charCodeAt() + 1]
             if (qChild) {
               pChild.fail = qChild
               break
@@ -68,7 +68,32 @@ class ACTree {
     }
   }
 
-  match(text) {}
+  match(text) {
+    let root = this.root
+    let n = text.length
+    let p = root
+
+    for (let i = 0; i < n; i++) {
+      let idx = text[i].charCodeAt() + 1
+
+      while (!p.children[idx] && p !== root) {
+        p = p.fail
+      }
+
+      p = p.children[idx]
+  
+      if (!p) {
+        p = root
+      }
+
+      let tmp = p
+      while (tmp !== root) {
+        if (tmp.isEnd) {
+          console.log(`Start from ${i - p.length + 1}, length: ${p.length}`);
+        }
+      }
+    }
+  }
 }
 
 
